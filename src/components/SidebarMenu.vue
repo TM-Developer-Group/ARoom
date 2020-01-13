@@ -15,24 +15,12 @@
             </div>
             <ul>
               <SidebarMenuItem
-                title="Music"
-                routerTo="/HelloWorld"
-                iconPath="music-white.png"
-                tag="li"
-              />
-
-              <SidebarMenuItem
-                title="Movie"
-                routerTo="/"
-                iconPath="movie-white.png"
-                tag="li"
-              />
-
-              <SidebarMenuItem
-                title="Photo & video"
-                routerTo="/"
-                iconPath="images-white.png"
-                tag="li"
+                v-for="item in getMenuItems()"
+                :key="item.id"
+                :title="item.title"
+                :routerTo="item.routerTo"
+                :iconPath="item.iconPath"
+                :tag="item.tag"
               />
             </ul>
           </div>
@@ -66,6 +54,32 @@ import $ from "jquery";
 export default class SidebarMenu extends Vue {
   toggleSidebar(): void {
     $("#wrapper").toggleClass("wrapper-active");
+  }
+  // TODO: Get object from file.
+  getMenuItems(): any {
+    return [
+      {
+        id: 0,
+        title: 'Music',
+        routerTo: '/HelloWorld',
+        iconPath: 'music-white.png',
+        tag: 'li'
+      },
+      {
+        id: 1,
+        title: 'Movie',
+        routerTo: '/',
+        iconPath: 'movie-white.png',
+        tag: 'li'
+      },
+      {
+        id: 2,
+        title: 'Photo & Video',
+        routerTo: '/',
+        iconPath: 'images-white.png',
+        tag: 'li'
+      }
+    ];
   }
 }
 </script>
