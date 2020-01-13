@@ -89,10 +89,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-  mounted() {
-    this.msg = 'Welcome to Your Vue.js + TypeScript App'
-  }
+  msg: string = 'Welcome to Your Vue.js + TypeScript App';
 }
 </script>
 

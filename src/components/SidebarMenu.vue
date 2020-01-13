@@ -14,36 +14,36 @@
               </ul>
             </div>
             <ul>
-              <router-link to="/HelloWorld" tag="li">
-                <div class="menu-item">
-                  <img id="icon" src="@/assets/music-white.png" />
-                  <span>Music</span>
-                </div>
-              </router-link>
+              <SidebarMenuItem
+                title="Music"
+                routerTo="/HelloWorld"
+                iconPath="music-white.png"
+                tag="li"
+              />
 
-              <router-link to="/" tag="li">
-                <div class="menu-item">
-                  <img id="icon" src="@/assets/movie-white.png" />
-                  <span>Movie</span>
-                </div>
-              </router-link>
+              <SidebarMenuItem
+                title="Movie"
+                routerTo="/"
+                iconPath="movie-white.png"
+                tag="li"
+              />
 
-              <router-link to="/" tag="li">
-                <div class="menu-item">
-                  <img id="icon" src="@/assets/images-white.png" />
-                  <span>Photo & video</span>
-                </div>
-              </router-link>
+              <SidebarMenuItem
+                title="Photo & video"
+                routerTo="/"
+                iconPath="images-white.png"
+                tag="li"
+              />
             </ul>
           </div>
           <div class="sidebar-block">
             <ul>
-              <router-link to="/" tag="li">
-                <div class="menu-item">
-                  <img id="icon" src="@/assets/settings-white.png" />
-                  <span>Settings</span>
-                </div>
-              </router-link>
+              <SidebarMenuItem
+                title="Settings"
+                routerTo="/"
+                iconPath="settings-white.png"
+                tag="li"
+              />
             </ul>
           </div>
         </div>
@@ -54,9 +54,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import SidebarMenuItem from "@/components/SidebarMenuItem.vue";
 import $ from "jquery";
 
-@Component
+@Component({
+  components: {
+    SidebarMenu,
+    SidebarMenuItem
+  }
+})
 export default class SidebarMenu extends Vue {
   toggleSidebar(): void {
     $("#wrapper").toggleClass("wrapper-active");
