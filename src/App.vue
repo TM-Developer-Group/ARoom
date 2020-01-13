@@ -9,7 +9,9 @@
     -->
     <SidebarMenu/>
     <div class="content">
-      <router-view/>
+      <transition name="fade">
+        <router-view/>
+      </transition>
     </div>
   </div>
 </template>

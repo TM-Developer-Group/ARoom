@@ -71,7 +71,7 @@ export default class SidebarMenu extends Vue {
 }
 
 #sidebar-menu {
-  position: absolute;
+  position: fixed;
   display: flex;
   width: auto;
   overflow: hidden;
@@ -91,7 +91,7 @@ export default class SidebarMenu extends Vue {
   background-color: rgb(0, 132, 255);
   overflow: hidden;
   display: inline-block;
-  transition: all 0.3s;
+  transition: width 0.3s;
 }
 
 .wrapper-active {
