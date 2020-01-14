@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user-select-none">
     <div class="row d-flex justify-content-center align-items-baseline">
       <div class="form-group has-search w-75">
         <input type="text" class="form-control" placeholder="Search" />
@@ -53,6 +53,10 @@ hr {
 .selector-active {
   background-color: rgb(0, 132, 255);
   color: white;
+}
+
+.user-select-none {
+  user-select: none;
 }
 
 </style>

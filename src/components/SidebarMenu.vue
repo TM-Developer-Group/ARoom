@@ -60,24 +60,24 @@ export default class SidebarMenu extends Vue {
     return [
       {
         id: 0,
-        title: 'Music',
-        routerTo: '/Music',
-        iconPath: 'music-white.png',
-        tag: 'li'
+        title: "Music",
+        routerTo: "/Music",
+        iconPath: "music-white.png",
+        tag: "li"
       },
       {
         id: 1,
-        title: 'Movie',
-        routerTo: '/',
-        iconPath: 'movie-white.png',
-        tag: 'li'
+        title: "Movie",
+        routerTo: "/",
+        iconPath: "movie-white.png",
+        tag: "li"
       },
       {
         id: 2,
-        title: 'Photo & Video',
-        routerTo: '/',
-        iconPath: 'images-white.png',
-        tag: 'li'
+        title: "Photo & Video",
+        routerTo: "/",
+        iconPath: "images-white.png",
+        tag: "li"
       }
     ];
   }
@@ -96,6 +96,7 @@ export default class SidebarMenu extends Vue {
   width: auto;
   overflow: hidden;
   z-index: 999;
+  user-select: none;
 }
 
 #sidebar-panel {
