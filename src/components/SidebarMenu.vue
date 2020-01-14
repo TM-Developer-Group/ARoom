@@ -61,7 +61,7 @@ export default class SidebarMenu extends Vue {
       {
         id: 0,
         title: 'Music',
-        routerTo: '/HelloWorld',
+        routerTo: '/Music',
         iconPath: 'music-white.png',
         tag: 'li'
       },
@@ -140,6 +140,7 @@ export default class SidebarMenu extends Vue {
   text-align: center;
   padding: 10px 0px;
   height: 45px;
+  cursor: pointer;
 }
 
 #sidebar li:hover {

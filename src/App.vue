@@ -8,9 +8,9 @@
     <router-view/>
     -->
     <SidebarMenu/>
-    <div class="content">
+    <div class="container">
       <transition name="fade">
-        <router-view/>
+        <router-view class="pt-4"/>
       </transition>
     </div>
   </div>
@@ -39,6 +39,13 @@ export default class App extends Vue {}
 
 .content {
   margin-left: 50px;
-  transition: all 0.1s;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .4s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -8,7 +8,11 @@ export default new Router({
     routes: [
         {
             path: '/HelloWorld',
-            component: () => import('./components/HelloWorld.vue')
+            component: () => import('@/components/HelloWorld.vue')
+        },
+        {
+            path: '/Music',
+            component: () => import('@/components/Music.vue')
         }
     ]
 })
