@@ -1,29 +1,23 @@
 <template>
   <div id="app">
-    <!--
-    <img alt="Vue logo" src="./assets/logo.png">
-    <div>
-      <router-link to="/HelloWorld">Say Hello!</router-link>
-    </div>
-    <router-view/>
-    -->
-    <SidebarMenu/>
+    <SidebarMenu />
     <div class="container">
       <transition name="fade">
-        <router-view class="pt-4"/>
+        <router-view class="pt-4" />
       </transition>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue'
-import SidebarMenu from '@/components/SidebarMenu.vue'
+import { Component, Vue } from "vue-property-decorator";
+import HelloWorld from "@/components/HelloWorld.vue";
+import SidebarMenu from "@/components/SidebarMenu.vue";
 
 @Component({
   components: {
-    HelloWorld, SidebarMenu
+    HelloWorld,
+    SidebarMenu
   }
 })
 export default class App extends Vue {}
@@ -31,7 +25,7 @@ export default class App extends Vue {}
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -41,11 +35,13 @@ export default class App extends Vue {}
   margin-left: 50px;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .4s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

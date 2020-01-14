@@ -11,6 +11,7 @@ export default new Router({
             component: () => import('@/components/HelloWorld.vue')
         },
         {
+            name: 'Music',
             path: '/Music',
             component: () => import('@/components/Music.vue')
         }
