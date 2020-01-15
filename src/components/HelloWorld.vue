@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <img src="@/assets/logo.png"/>
     <h1>{{ msg }}</h1>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       With Bootstrap!
@@ -88,15 +89,15 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
  @Component
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-  mounted() {
-    this.msg = 'Welcome to Your Vue.js + TypeScript App'
-  }
+  msg: string = 'Welcome to Your Vue.js + TypeScript App';
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.hello{
+  text-align: center;
+}
 h3 {
   margin: 40px 0 0;
 }
