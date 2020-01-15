@@ -79,29 +79,18 @@
       <li>
         <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
       </li>
-      <span @click="saveFile">Test</span>
-      <span @click="readFile">Test</span>
-
+ 
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import * as io from '../script/io'
-let Io:io.IOFunctionalityImpl = new io.IOFunctionalityImpl()
-
  @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
   mounted() {
     this.msg = 'Welcome to Your Vue.js + TypeScript App'
-  }
-  saveFile():void{
-    Io.saveFile()
-  }
-  readFile():any{
-    Io.readFile("config.txt");
   }
 }
 </script>

@@ -7,9 +7,11 @@ let content : string = 'Test creating file'
 interface IOFunctionality{
      saveFile():any,
      readFile(filename:string):any,
+     readFileIcon():any
 
 }
 export class IOFunctionalityImpl implements IOFunctionality{
+
 
     async saveFile(){
         var file = await dialog.showSaveDialog(remote.getCurrentWindow(),{
@@ -39,4 +41,30 @@ export class IOFunctionalityImpl implements IOFunctionality{
               }
         });
     }
+
+     readFileIcon() {
+        //Open file dialog 
+        const files:any = dialog.showOpenDialogSync(remote.getCurrentWindow(),{
+            properties:['openFile'],
+            filters:[
+                //Filters
+                { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+                { name: 'Movies', extensions: ['mkv', 'avi', 'mp4'] },
+                { name: 'Custom File Type', extensions: ['as'] },
+                { name: 'All Files', extensions: ['*'] } 
+            ]
+        });
+        
+        //if no files
+        if(!files){
+            return;
+        }
+
+        const file = files[0];
+
+        const fileContent = fs.readFileSync(file).toString();
+
+        alert(fileContent);
+
+     }
 }
