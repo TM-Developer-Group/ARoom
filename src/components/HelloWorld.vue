@@ -42,7 +42,7 @@
       </li>
     </ul>
     <h3>Essential Links</h3>
-    <ul>
+     <ul>
       <li>
         <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
       </li>
@@ -80,14 +80,14 @@
       <li>
         <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
       </li>
+ 
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
+ @Component
 export default class HelloWorld extends Vue {
   msg: string = 'Welcome to Your Vue.js + TypeScript App';
 }
