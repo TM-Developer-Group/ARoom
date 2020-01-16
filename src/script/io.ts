@@ -1,75 +1,3 @@
-<<<<<<< HEAD
-import { remote } from 'electron'
-import * as fs from 'fs'
-const dialog = remote.dialog
-
-let content : string = 'Test creating file'
-
-interface IOFunctionality{
-     saveFile():any,
-     readFile(filename:string):any,
-     readFileIcon():any
-
-}
-export class IOFunctionalityImpl implements IOFunctionality{
-
-
-    async saveFile(){
-        var file = await dialog.showSaveDialog(remote.getCurrentWindow(),{
-            title:'Save file to...'
-        })
-
-        if(file.filePath !== undefined){
-            fs.writeFile(file.filePath,content,(err)=>{
-                if(err){
-                    alert('Error ocurred creating the file' + err.message)
-                }else{
-                    alert('Saved')
-                    alert()
-                 }
-            })
-        }
-    }
- //Set directory for config folder coz after build app cannot find config file
-    async readFile(filename:string){
-         fs.readFile("./config/"+filename, 'utf-8', (err, data) => {
-            if(err){
-                alert("An error ocurred reading the file :" + err.message);
-                return;
-            }else{
-            // Change how to handle the file content
-            alert("The file content is : " + data ); 
-              }
-        });
-    }
-
-     readFileIcon() {
-        //Open file dialog 
-        const files:any = dialog.showOpenDialogSync(remote.getCurrentWindow(),{
-            properties:['openFile'],
-            filters:[
-                //Filters
-                { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
-                { name: 'Movies', extensions: ['mkv', 'avi', 'mp4'] },
-                { name: 'Custom File Type', extensions: ['as'] },
-                { name: 'All Files', extensions: ['*'] } 
-            ]
-        });
-        
-        //if no files
-        if(!files){
-            return;
-        }
-
-        const file = files[0];
-
-        const fileContent = fs.readFileSync(file).toString();
-
-        alert(fileContent);
-
-     }
-}
-=======
 import { remote } from "electron";
 import * as fs from "fs";
 const dialog = remote.dialog;
@@ -80,6 +8,8 @@ interface IOFunctionality {
   saveFile(filePath: string, data: any): void;
   readFile(filePath: string, encoding: string): string | undefined;
   readFileDialogSync(options?: any): any;
+  readFileFromDir(folderName:string):string[];
+  readFileFromDirDialog():string[];
 }
 export class IO implements IOFunctionality {
   async saveFileDialog(data: any, options?: any) {
@@ -136,5 +66,31 @@ export class IO implements IOFunctionality {
     let fileContent = fs.readFileSync(file).toString();
     return fileContent;
   }
+
+  readFileFromDir(folderName: string): string[] {
+    let FileInfo:string[] = [];
+    fs.readdirSync(folderName).forEach(file => {
+      FileInfo.push(file);
+    });
+    return FileInfo;
+  }
+
+  readFileFromDirDialog(): string[] {
+    let FileInfo:string[] = [];
+    let options:any = {properties:["openDirectory"]}
+    let dir:any = dialog.showOpenDialogSync(
+      remote.getCurrentWindow(),
+      options
+    );
+    fs.readdirSync(dir[0]).forEach(file => {
+      FileInfo.push(file);
+    });
+
+    alert(FileInfo.length);
+    return FileInfo;
+    
+   }
+
+
 }
->>>>>>> 7be256dfa67f617228b692f1ae9bc4ce933793b1
+

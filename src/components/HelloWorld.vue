@@ -80,17 +80,31 @@
       <li>
         <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
       </li>
- 
+      <span @click="readFileFromFolder">TestReadFolder</span>
+      <span @click="readFileFromDirDialog">TestReadFolderOpenDialog</span>
+
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import * as ms from "../script/io";
+
+let ioImpl = new ms.IO();
+
  @Component
 export default class HelloWorld extends Vue {
   msg: string = 'Welcome to Your Vue.js + TypeScript App';
+  readFileFromFolder():any{
+    ioImpl.readFileFromDir("/Users/1/Desktop/test/GrandRoute-master");
+  }
+  readFileFromDirDialog():any{
+    ioImpl.readFileFromDirDialog();
+  }
 }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
