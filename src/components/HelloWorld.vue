@@ -1,6 +1,13 @@
 <template>
   <div class="hello">
+    <img src="@/assets/logo.png"/>
     <h1>{{ msg }}</h1>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      With Bootstrap!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <p>
       For a guide and recipes on how to configure / customize this project,
       <br />check out the
@@ -35,7 +42,7 @@
       </li>
     </ul>
     <h3>Essential Links</h3>
-    <ul>
+     <ul>
       <li>
         <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
       </li>
@@ -73,21 +80,24 @@
       <li>
         <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
       </li>
+ 
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
+ @Component
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+  msg: string = 'Welcome to Your Vue.js + TypeScript App';
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.hello{
+  text-align: center;
+}
 h3 {
   margin: 40px 0 0;
 }
