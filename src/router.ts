@@ -13,7 +13,15 @@ export default new Router({
         {
             name: 'Music',
             path: '/Music',
-            component: () => import('@/components/Music.vue')
+            component: () => import('@/components/Music.vue'),
+            children: [
+                {
+                    name: 'MusicSongs',
+                    path: 'Songs',
+                    component: () => import('@/components/MusicSongList.vue'),
+                    props: true
+                }
+            ]
         }
     ]
 })

@@ -6,58 +6,78 @@
       </div>
     </div>
     <div class="row d-flex justify-content-center align-items-baseline">
-      <a class="selector selector-active">songs</a>
-      <a class="selector">albums</a>
-      <a class="selector">artists</a>
-      <a class="selector">playlists</a>
-      <a class="selector">filter</a>
+      <router-link
+        v-for="item in getCategories()"
+        :key="item.id"
+        class="selector"
+        exact-active-class="selector-active"
+        :to="item.to"
+      >
+        {{ item.title }}
+      </router-link>
     </div>
     <hr />
-    <MusicSongList :songList="getSongList()"/>
-    <router-view />
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import MusicSongList from '@/components/MusicSongList.vue';
+import MusicSongList from "@/components/MusicSongList.vue";
 import $ from "jquery";
 
 @Component({
-  components:{
-    Music, MusicSongList
+  components: {
+    Music,
+    MusicSongList
   }
 })
 export default class Music extends Vue {
-  getSongList():Array<any> {
+  getCategories(): any[] {
+    return [
+      {
+        id: 1,
+        title: "songs",
+        to: {
+          name: "MusicSongs",
+          params: {
+            songList: this.getSongList()
+          }
+        }
+      }
+    ];
+  }
+  getSongList(): any[] {
     return [
       {
         song: {
-          name: 'Song 1',
-          duration: '1:00',
-          genre: 'genre 1',
+          name: "Song 1",
+          duration: "1:00",
+          genre: "genre 1",
           album: {
-            name: 'Album 1'
+            name: "Album 1"
           }
         },
         artist: {
-          name: 'Artist 1'
+          name: "Artist 1"
         }
       },
       {
         song: {
-          name: 'Song 1',
-          duration: '1:00',
-          genre: 'genre 1',
+          name: "Song 1",
+          duration: "1:00",
+          genre: "genre 1",
           album: {
-            name: 'Album 1'
+            name: "Album 1"
           }
         },
         artist: {
-          name: 'Artist 1'
+          name: "Artist 1"
         }
       }
-    ]
+    ];
   }
 }
 </script>
@@ -83,6 +103,7 @@ hr {
   font-size: 11pt;
   cursor: pointer;
   margin: 0 2px;
+  color: inherit;
 }
 
 .selector:hover {
