@@ -80,7 +80,6 @@
       <li>
         <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
       </li>
- 
     </ul>
    
   </div>
@@ -88,15 +87,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import * as mt from "../script/metadata";
 
-let mtdt = new mt.MetaData();
-
- @Component
+@Component
 export default class HelloWorld extends Vue {
   msg: string = 'Welcome to Your Vue.js + TypeScript App';
- 
 }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

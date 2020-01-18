@@ -8,6 +8,8 @@ interface IOFunctionality {
   saveFile(filePath: string, data: any): void;
   readFile(filePath: string, encoding: string): string | undefined;
   readFileDialogSync(options?: any): any;
+  readFileFromDir(folderName:string):string[];
+  readFileFromDirDialog():string[];
 }
 export class IO implements IOFunctionality {
   async saveFileDialog(data: any, options?: any) {
@@ -64,4 +66,31 @@ export class IO implements IOFunctionality {
     let fileContent = fs.readFileSync(file).toString();
     return fileContent;
   }
+
+  readFileFromDir(folderName: string): string[] {
+    let FileInfo:string[] = [];
+    fs.readdirSync(folderName).forEach(file => {
+      FileInfo.push(file);
+    });
+    return FileInfo;
+  }
+
+  readFileFromDirDialog(): string[] {
+    let FileInfo:string[] = [];
+    let options:any = {properties:["openDirectory"]}
+    let dir:any = dialog.showOpenDialogSync(
+      remote.getCurrentWindow(),
+      options
+    );
+    fs.readdirSync(dir[0]).forEach(file => {
+      FileInfo.push(file);
+    });
+
+    alert(FileInfo.length);
+    return FileInfo;
+    
+   }
+
+
 }
+
