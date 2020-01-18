@@ -82,14 +82,20 @@
       </li>
  
     </ul>
+   
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import * as mt from "../script/metadata";
+
+let mtdt = new mt.MetaData();
+
  @Component
 export default class HelloWorld extends Vue {
   msg: string = 'Welcome to Your Vue.js + TypeScript App';
+ 
 }
 </script>
 
