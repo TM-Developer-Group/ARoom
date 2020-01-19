@@ -16,6 +16,11 @@ export default new Router({
             component: () => import('@/components/Music.vue'),
             children: [
                 {
+                    name: 'MusicNew',
+                    path: 'New',
+                    component: () => import('@/components/MusicNewTab.vue')
+                },
+                {
                     name: 'MusicSongs',
                     path: 'Songs',
                     component: () => import('@/components/MusicSongList.vue'),

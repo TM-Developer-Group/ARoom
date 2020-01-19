@@ -7,8 +7,8 @@
     </div>
     <div class="row d-flex justify-content-center align-items-baseline">
       <router-link
-        v-for="item in getCategories()"
-        :key="item.id"
+        v-for="(item, i) in getCategories()"
+        :key="i"
         class="selector"
         exact-active-class="selector-active"
         :to="item.to"
@@ -38,7 +38,12 @@ export default class Music extends Vue {
   getCategories(): any[] {
     return [
       {
-        id: 1,
+        title: "new",
+        to: {
+          name: "MusicNew",
+        }
+      },
+      {
         title: "songs",
         to: {
           name: "MusicSongs",
