@@ -3,7 +3,6 @@
     <div class="carousel d-flex justify-content-center">
       <slot></slot>
     </div>
-    <div style="height: 2000px"></div>
   </div>
 </template>
 
@@ -12,7 +11,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import $ from "jquery";
 
 // TODO: Add MouseWheel card change.
-// FIXME: Fix bug with highspeed rotation
+// TODO: Add img size property.
+// FIXME: Fix bug with highspeed rotation.
 
 @Component
 export default class Carousel extends Vue {
@@ -31,7 +31,7 @@ export default class Carousel extends Vue {
     let mouseOffset: number = 0;
     let counter: number = 0;
 
-    this.cardCount = $('.carousel img').length;
+    this.cardCount = $(".carousel img").length;
     this.cardFullWidth =
       ($(".carousel img").width() as number) +
       parseInt($(".carousel img").css("margin-left"), 10) +
@@ -115,12 +115,18 @@ export default class Carousel extends Vue {
 
   private cardToEnd(): void {
     var currentLeft = parseInt($(".carousel #first").css("left"), 10);
-    $(".carousel #first").css("left", currentLeft + this.cardFullWidth * this.cardCount);
+    $(".carousel #first").css(
+      "left",
+      currentLeft + this.cardFullWidth * this.cardCount
+    );
   }
 
   private cardToStart(): void {
     var currentLeft = parseInt($(".carousel #last").css("left"), 10);
-    $(".carousel #last").css("left", currentLeft - this.cardFullWidth * this.cardCount);
+    $(".carousel #last").css(
+      "left",
+      currentLeft - this.cardFullWidth * this.cardCount
+    );
   }
 
   private setOpacity(item: HTMLElement): void {
