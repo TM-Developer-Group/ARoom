@@ -10,12 +10,13 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import $ from "jquery";
 
-// TODO: Add MouseWheel card change.
-// TODO: Add img size property.
+// TODO: Add MouseWheel event.
 // FIXME: Fix bug with highspeed rotation.
 
 @Component
 export default class Carousel extends Vue {
+  @Prop() public imgSize!: number;
+
   private cardFullWidth: number = 0;
   private cardCount: number = 0;
 
@@ -24,18 +25,26 @@ export default class Carousel extends Vue {
   }
 
   private init(): void {
-    let cards: HTMLElement[] = $(".carousel img").toArray();
+    let cards: HTMLElement[] = $(".carousel .carouselCard").toArray();
     let carouselClass = this;
     let startPointX: number = 0;
     let currentLeft: number = 0;
     let mouseOffset: number = 0;
     let counter: number = 0;
 
-    this.cardCount = $(".carousel img").length;
+    $(".carousel img").css("width", this.imgSize + "px");
+    $(".carousel img").css("height", this.imgSize + "px");
+
+    $(".carousel .carouselCard:first").attr("id", "first");
+    $(".carousel .carouselCard:last").attr("id", "last");
+
+    this.cardCount = $(".carousel .carouselCard").length;
     this.cardFullWidth =
       ($(".carousel img").width() as number) +
       parseInt($(".carousel img").css("margin-left"), 10) +
       parseInt($(".carousel img").css("margin-right"), 10);
+
+    $(".carousel .carouselCard").css("width", this.cardFullWidth);
 
     cards.forEach(item => {
       this.setOpacity(item);
@@ -53,7 +62,6 @@ export default class Carousel extends Vue {
         counter >= carouselClass.cardFullWidth ||
         counter <= -carouselClass.cardFullWidth
       ) {
-        window.console.log(counter);
         if (counter < 0) {
           carouselClass.cardToEnd();
           carouselClass.replaceFirstAndLast(cards, true);
@@ -87,29 +95,29 @@ export default class Carousel extends Vue {
     if (diraction) {
       var nextFirst = $(".carousel #first")
         .removeAttr("id")
-        .next(".carousel img");
+        .next(".carousel .carouselCard");
       var nextLast = $(".carousel #last")
         .removeAttr("id")
-        .next(".carousel img");
+        .next(".carousel .carouselCard");
 
       if (nextLast.length !== 0) nextLast.attr("id", "last");
-      else $(".carousel img:first").attr("id", "last");
+      else $(".carousel .carouselCard:first").attr("id", "last");
 
       if (nextFirst.length !== 0) nextFirst.attr("id", "first");
-      else $(".carousel img:first").attr("id", "first");
+      else $(".carousel .carouselCard:first").attr("id", "first");
     } else {
       var prevFirst = $(".carousel #first")
         .removeAttr("id")
-        .prev(".carousel img");
+        .prev(".carousel .carouselCard");
       var prevLast = $(".carousel #last")
         .removeAttr("id")
-        .prev(".carousel img");
+        .prev(".carousel .carouselCard");
 
       if (prevLast.length !== 0) prevLast.attr("id", "last");
-      else $(".carousel img:last").attr("id", "last");
+      else $(".carousel .carouselCard:last").attr("id", "last");
 
       if (prevFirst.length !== 0) prevFirst.attr("id", "first");
-      else $(".carousel img:last").attr("id", "first");
+      else $(".carousel .carouselCard:last").attr("id", "first");
     }
   }
 
@@ -139,25 +147,40 @@ export default class Carousel extends Vue {
   }
 
   private getOpacity(x: number, parentWidth: number): number {
-    // NOTE: Number 1 in Math.sqrt(1) and '+ 1' this is the number that sets the maximum value of the function.
-    return -Math.pow((1 / (parentWidth / 2)) * x - Math.sqrt(1), 2) + 1;
+    // NOTE: Var a this is the number that sets the maximum value of the function.
+    var a = 1;
+    return - Math.pow((1 / (parentWidth / 2)) * x - Math.sqrt(a), 2) + a;
   }
 }
 </script>
 
 <style scoped>
-.carousel {
-  overflow: hidden;
+.carousel .carouselCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  flex-shrink: 0;
 }
 
 .carousel img {
-  flex-shrink: 0;
-  position: relative;
-  left: 1px;
   width: 200px;
   height: 200px;
   margin: 0 10px;
+  margin-bottom: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   pointer-events: none;
+}
+
+.carousel #author {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.carousel #title {
+  text-align: center;
+  font-size: 9pt;
 }
 </style>
