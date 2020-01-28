@@ -1,5 +1,8 @@
 import { remote } from "electron";
 import * as fs from "fs";
+ 
+
+
 const dialog = remote.dialog;
 
 interface IOFunctionality {
@@ -41,8 +44,24 @@ export class IO implements IOFunctionality {
       }
     });
   }
+  
+  getFiles(dir:any, files_:any,filter:any){    
+    files_ = files_ || [];
+      var files = fs.readdirSync(dir);
+      for (var i in files){
+          var name = dir + '/' + files[i];
+          if (fs.statSync(name).isDirectory()){
+              this.getFiles(name, files_,filter);
+          } 
+          if(fs.statSync(name).isFile() && name.endsWith(filter)){
+            files_.push(name);
+          }
+      }
+      return files_;
+  }
 
   readFile(filePath: string, encoding: string): string | undefined {
+    let files_:any = [];
     let result = fs.readFile(filePath, encoding, (err, data) => {
       if (err) {
         alert("Error ocurred creating the file : " + err.message);
