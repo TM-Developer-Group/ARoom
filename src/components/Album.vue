@@ -13,29 +13,21 @@
         <span>Скриптонит</span>
       </div>
     </div>
-    <div class="list-group">
-      <a
-        href="#"
-        class="list-group-item list-group-item-action"
-        v-for="(item, i) in getSongList()"
-        :key="i"
-      >
-        <span>{{ ++i }}</span>
-        <span class="ml-4">{{ item.label }}</span>
-      </a>
-    </div>
+    <TrackList :tracks="getSongList()"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import MusicSongList from "@/components/MusicSongList.vue";
+import TrackList from "@/components/TarckList.vue";
 import $ from "jquery";
 
 @Component({
   components: {
     MusicSongList,
-    Album
+    Album,
+    TrackList
   }
 })
 export default class Album extends Vue {

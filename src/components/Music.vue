@@ -57,6 +57,12 @@ export default class Music extends Vue {
         to:{
           name: "Album"
         }
+      },
+      {
+        title: "artist",
+        to:{
+          name: "Artist"
+        }
       }
     ];
   }
