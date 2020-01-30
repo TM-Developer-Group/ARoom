@@ -6,7 +6,7 @@ import * as fs from "fs";
 const dialog = remote.dialog;
 const TYPE_AUDIO = [".wav",".flac",".mp3",".mp4",".zip"];
 
-interface IOFunctionality {
+export interface IOFunctionality {
   saveFileDialog(data: any, options?: any): void;
   saveFileDialogSync(data: any, options?: any): void;
   saveFile(filePath: string, data: any): void;
@@ -15,6 +15,7 @@ interface IOFunctionality {
   readFileFromDir(folderName:string,filter:any):string[];
   readFileFromDirDialog():string[];
 }
+
 export class IO implements IOFunctionality {
   async saveFileDialog(data: any, options?: any) {
     let file = await dialog.showSaveDialog(remote.getCurrentWindow(), options);
@@ -22,10 +23,11 @@ export class IO implements IOFunctionality {
     if (file.filePath !== undefined) {
       fs.writeFile(file.filePath, data, err => {
         if (err) {
-          // TODO: log msg
-          alert("Error ocurred creating the file : " + err.message);
+          window.console.log(
+            "io.ts >> Error ocurred creating the file : " + err.message
+          );
         } else {
-          alert("Saved");
+          window.console.log("io.ts >> Saved");
         }
       });
     }
@@ -41,7 +43,7 @@ export class IO implements IOFunctionality {
   async saveFile(filePath: string, data: any) {
     await fs.writeFile(filePath, data, err => {
       if (err) {
-        alert("Error ocurred creating the file : " + err.message);
+        window.console.log("Error ocurred creating the file : " + err.message);
       }
     });
   }
@@ -69,7 +71,7 @@ export class IO implements IOFunctionality {
     let files_:any = [];
     let result = fs.readFile(filePath, encoding, (err, data) => {
       if (err) {
-        alert("Error ocurred creating the file : " + err.message);
+        window.console.log("Error ocurred creating the file : " + err.message);
       }
       return data;
     });
@@ -91,6 +93,7 @@ export class IO implements IOFunctionality {
     return fileContent;
   }
 
+
   readFileFromDir(folderName: string,filter:any): string[] {
     let FileInfo:string[] = [];
     fs.readdirSync(folderName).forEach(file => {
@@ -100,9 +103,9 @@ export class IO implements IOFunctionality {
   }
 
   readFileFromDirDialog(): string[] {
-    let FileInfo:string[] = [];
-    let options:any = {properties:["openDirectory"]}
-    let dir:any = dialog.showOpenDialogSync(
+    let FileInfo: string[] = [];
+    let options: any = { properties: ["openDirectory"] };
+    let dir: any = dialog.showOpenDialogSync(
       remote.getCurrentWindow(),
       options
     );
@@ -112,9 +115,5 @@ export class IO implements IOFunctionality {
 
     alert(FileInfo.length);
     return FileInfo;
-    
-   }
-
-
+  }
 }
-
