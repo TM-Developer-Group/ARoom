@@ -1,6 +1,10 @@
 import { remote } from "electron";
 import * as fs from "fs";
+ 
+
+
 const dialog = remote.dialog;
+const TYPE_AUDIO = [".wav",".flac",".mp3",".mp4",".zip"];
 
 export interface IOFunctionality {
   saveFileDialog(data: any, options?: any): void;
@@ -8,8 +12,8 @@ export interface IOFunctionality {
   saveFile(filePath: string, data: any): void;
   readFile(filePath: string, encoding: string): string | undefined;
   readFileDialogSync(options?: any): any;
-  readFileFromDir(folderName: string): string[];
-  readFileFromDirDialog(): string[];
+  readFileFromDir(folderName:string,filter:any):string[];
+  readFileFromDirDialog():string[];
 }
 
 export class IO implements IOFunctionality {
@@ -43,8 +47,28 @@ export class IO implements IOFunctionality {
       }
     });
   }
+  
+  getFiles(dir:any, files_:any,filter:any){    
+    files_ = files_ || [];
+      var files = fs.readdirSync(dir);
+      for (var i in files){
+          var name = dir + '/' + files[i];
+          if (fs.statSync(name).isDirectory()){
+              this.getFiles(name, files_,filter);
+          } 
+          if(fs.statSync(name).isFile()){
+            for (let index = 0; index < filter.length; index++) {
+               if(name.endsWith(TYPE_AUDIO[TYPE_AUDIO.indexOf(filter[index])])){
+                files_.push(name);
+               }   
+            }       
+          }
+      }
+      return files_;
+  }
 
   readFile(filePath: string, encoding: string): string | undefined {
+    let files_:any = [];
     let result = fs.readFile(filePath, encoding, (err, data) => {
       if (err) {
         window.console.log("Error ocurred creating the file : " + err.message);
@@ -69,8 +93,9 @@ export class IO implements IOFunctionality {
     return fileContent;
   }
 
-  readFileFromDir(folderName: string): string[] {
-    let FileInfo: string[] = [];
+
+  readFileFromDir(folderName: string,filter:any): string[] {
+    let FileInfo:string[] = [];
     fs.readdirSync(folderName).forEach(file => {
       FileInfo.push(file);
     });
