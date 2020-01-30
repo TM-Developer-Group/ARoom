@@ -4,6 +4,7 @@ import * as fs from "fs";
 
 
 const dialog = remote.dialog;
+const TYPE_AUDIO = [".wav",".flac",".mp3",".mp4",".zip"];
 
 interface IOFunctionality {
   saveFileDialog(data: any, options?: any): void;
@@ -11,7 +12,7 @@ interface IOFunctionality {
   saveFile(filePath: string, data: any): void;
   readFile(filePath: string, encoding: string): string | undefined;
   readFileDialogSync(options?: any): any;
-  readFileFromDir(folderName:string):string[];
+  readFileFromDir(folderName:string,filter:any):string[];
   readFileFromDirDialog():string[];
 }
 export class IO implements IOFunctionality {
@@ -53,8 +54,12 @@ export class IO implements IOFunctionality {
           if (fs.statSync(name).isDirectory()){
               this.getFiles(name, files_,filter);
           } 
-          if(fs.statSync(name).isFile() && name.endsWith(filter)){
-            files_.push(name);
+          if(fs.statSync(name).isFile()){
+            for (let index = 0; index < filter.length; index++) {
+               if(name.endsWith(TYPE_AUDIO[TYPE_AUDIO.indexOf(filter[index])])){
+                files_.push(name);
+               }   
+            }       
           }
       }
       return files_;
@@ -86,7 +91,7 @@ export class IO implements IOFunctionality {
     return fileContent;
   }
 
-  readFileFromDir(folderName: string): string[] {
+  readFileFromDir(folderName: string,filter:any): string[] {
     let FileInfo:string[] = [];
     fs.readdirSync(folderName).forEach(file => {
       FileInfo.push(file);
