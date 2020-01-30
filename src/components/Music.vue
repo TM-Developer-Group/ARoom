@@ -51,6 +51,18 @@ export default class Music extends Vue {
             songList: this.getSongList()
           }
         }
+      },
+      {
+        title: "album",
+        to:{
+          name: "Album"
+        }
+      },
+      {
+        title: "artist",
+        to:{
+          name: "Artist"
+        }
       }
     ];
   }
