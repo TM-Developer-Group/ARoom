@@ -33,6 +33,7 @@
         "eslint-plugin-vue": "^5.0.0",
         "jquery": "^3.4.1",
         "musicmetadata": "^2.0.5",
+        "node-json-db": "^1.0.3",
         "popper.js": "^1.16.0",
         "recursive-readdir": "^2.2.2",
         "typescript": "~3.5.3",

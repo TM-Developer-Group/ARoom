@@ -1,12 +1,15 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, MenuItem } from 'electron'
+import { app, protocol, BrowserWindow, MenuItem, remote, globalShortcut } from 'electron'
 import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+import { JsonDB } from 'node-json-db';
+import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
  
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const db = new JsonDB(new Config("MediaDb", false, false, '/'));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
