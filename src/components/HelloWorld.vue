@@ -102,7 +102,7 @@ export default class HelloWorld extends Vue {
    testGetFile():any{
     let io = new ts.IO();
     let filter = [".wav",".zip"]
-   let result:any = io.getFiles("D:/Загрузки","",filter); 
+   let result:any = io.getFiles("D:/Загрузки",filter); 
    window.console.log("RESULT" + result)
   }
   
