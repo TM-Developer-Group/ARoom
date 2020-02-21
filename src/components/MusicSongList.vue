@@ -47,6 +47,7 @@ export default class MusicSongList extends Vue {
 table {
   font-size: 9pt;
   margin-bottom: 0;
+  table-layout: fixed;
 }
 
 th,
@@ -57,5 +58,10 @@ td {
 
 td:nth-child(2) {
   text-align: right;
+}
+
+td {
+  white-space: nowrap;
+  overflow: hidden;
 }
 </style>
