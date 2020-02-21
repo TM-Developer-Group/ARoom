@@ -6,29 +6,90 @@
       </div>
     </div>
     <div class="row d-flex justify-content-center align-items-baseline">
-      <a class="selector">songs</a>
-      <a class="selector">albums</a>
-      <a class="selector">artists</a>
-      <a class="selector">playlists</a>
-      <a class="selector">filter</a>
+      <router-link
+        v-for="(item, i) in getCategories()"
+        :key="i"
+        class="selector"
+        exact-active-class="selector-active"
+        :to="item.to"
+      >
+        {{ item.title }}
+      </router-link>
     </div>
     <hr />
-    <router-view />
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import MusicSongList from "@/components/MusicSongList.vue";
+import { MediaManager, Artist, Album, Track } from '@/script/mediaManager'
 import $ from "jquery";
 
-@Component
-export default class Music extends Vue {}
+@Component({
+  components: {
+    Music,
+    MusicSongList
+  }
+})
+
+
+export default class Music extends Vue {
+  mediaManager = new MediaManager();
+  artists = new Array<Artist>();
+
+  mounted(){
+    this.mediaManager.findAudio('D:/Personal/Music');
+    this.artists = this.mediaManager.getArtists();
+  }
+  getCategories(): any[] {
+    return [
+      {
+        title: "new",
+        to: {
+          name: "MusicNew",
+        }
+      },
+      {
+        title: "tracks",
+        to: {
+          name: "MusicSongs",
+          params: {
+            songList: this.getSongList()
+          }
+        }
+      },
+      {
+        title: "album",
+        to:{
+          name: "Album"
+        }
+      },
+      {
+        title: "artist",
+        to:{
+          name: "Artist"
+        }
+      }
+    ];
+  }
+  getSongList(): Track[] {
+    return this.mediaManager.getTracks();
+  }
+}
 </script>
 
 <style scoped>
 .form-control {
   border-radius: 25px;
   z-index: 900;
+}
+
+.form-control::placeholder {
+  text-align: center;
 }
 
 hr {
@@ -41,7 +102,8 @@ hr {
   padding: 1px 10px;
   font-size: 11pt;
   cursor: pointer;
-  margin: 0 2px
+  margin: 0 2px;
+  color: inherit;
 }
 
 .selector:hover {
@@ -58,5 +120,4 @@ hr {
 .user-select-none {
   user-select: none;
 }
-
 </style>
