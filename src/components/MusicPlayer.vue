@@ -86,37 +86,27 @@
 }
 
 .progress-value {
-  
   box-shadow: 0 10px 40px -10px #fff;
   border-radius: 100px;
   background: #fff;
   height: 30px;
   
 }
-
-@keyframes load {
-  0% { width: 0; }
-  10%{width: 10%;}
-  15%{width: 15%;}
-  20%{width: 20%;}
-  25%{width: 25%;}
-  30%{width: 30%;}
-  35%{width: 35%;}
-  40%{width: 40%;}
-  45%{width: 45%;}
-  50%{width: 50%;}
-  55%{width: 55%;}
-  60%{width: 60%;}
-  65%{width: 65%;}
-  70%{width: 70%;}
-  75%{width: 75%;}
-  80%{width: 80%;}
-  85%{width: 85%;}
-  90%{width: 90%;}
-  95%{width: 95%;}
-  100% { width: 100%; }
+@media (max-width: 780px) {
+  .container-player{
+    height: 120px;
+  }
+  .player_button{
+    margin-right: 102px;
+  }
 }
 
+@media (max-width: 780px) {
+  .player_button{
+    margin-left: 70px;
+  }
+}
+ 
 .range {
   -webkit-appearance: none;
   -moz-appearance: none;
