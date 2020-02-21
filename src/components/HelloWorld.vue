@@ -42,7 +42,7 @@
       </li>
     </ul>
     <h3>Essential Links</h3>
-    <ul>
+     <ul>
       <li>
         <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
       </li>
@@ -81,16 +81,34 @@
         <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a>
       </li>
     </ul>
+    <span @click="testGetFile()">test</span>
+   <MusicPlayer/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import MusicPlayer from "@/components/MusicPlayer.vue";
+import * as ts from "../script/io";
 
-@Component
+@Component({
+  components: {
+    HelloWorld,
+    MusicPlayer
+  }
+})
 export default class HelloWorld extends Vue {
   msg: string = 'Welcome to Your Vue.js + TypeScript App';
+   testGetFile():any{
+    let io = new ts.IO();
+    let filter = [".wav",".zip"]
+   let result:any = io.getFiles("D:/Загрузки",filter); 
+   window.console.log("RESULT" + result)
+  }
+  
 }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

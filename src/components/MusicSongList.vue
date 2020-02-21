@@ -12,11 +12,11 @@
       </thead>
       <tbody>
         <tr v-for="item in songList" :key="item.id">
-          <td>{{item.song.name}}</td>
-          <td>{{item.song.duration}}</td>
-          <td>{{item.artist.name}}</td>
-          <td>{{item.song.album.name}}</td>
-          <td>{{item.song.genre}}</td>
+          <td>{{item.title}}</td>
+          <td>{{toSec(item.duration)}}</td>
+          <td>{{item.artist}}</td>
+          <td>{{item.album}}</td>
+          <td>{{item.genre.toString()}}</td>
         </tr>
       </tbody>
     </table>
@@ -25,9 +25,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { Track } from "@/script/mediaManager";
 @Component
 export default class MusicSongList extends Vue {
-  @Prop() private songList!: Array<any>;
+  @Prop() private songList!: Array<Track>;
+  toSec(duration: number) {
+    return Math.floor(duration / 60) + ":" + ((Math.round(duration % 60) < 10)
+      ? "0" + Math.round(duration % 60)
+      : Math.round(duration % 60));
+  }
 }
 </script>
 
@@ -43,7 +49,8 @@ table {
   margin-bottom: 0;
 }
 
-th, td {
+th,
+td {
   padding: 0.25rem !important;
   border: none;
 }
@@ -51,5 +58,4 @@ th, td {
 td:nth-child(2) {
   text-align: right;
 }
-
 </style>

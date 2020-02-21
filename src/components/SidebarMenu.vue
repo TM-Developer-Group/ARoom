@@ -75,7 +75,7 @@ export default class SidebarMenu extends Vue {
       {
         id: 2,
         title: "Photo & Video",
-        routerTo: "/",
+        routerTo: "/HelloWorld",
         iconPath: "images-white.png",
         tag: "li"
       }

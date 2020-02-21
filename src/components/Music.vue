@@ -26,6 +26,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import MusicSongList from "@/components/MusicSongList.vue";
+import { MediaManager, Artist, Album, Track } from '@/script/mediaManager'
 import $ from "jquery";
 
 @Component({
@@ -34,7 +35,16 @@ import $ from "jquery";
     MusicSongList
   }
 })
+
+
 export default class Music extends Vue {
+  mediaManager = new MediaManager();
+  artists = new Array<Artist>();
+
+  mounted(){
+    this.mediaManager.findAudio('D:/Personal/Music');
+    this.artists = this.mediaManager.getArtists();
+  }
   getCategories(): any[] {
     return [
       {
@@ -44,7 +54,7 @@ export default class Music extends Vue {
         }
       },
       {
-        title: "songs",
+        title: "tracks",
         to: {
           name: "MusicSongs",
           params: {
@@ -66,35 +76,8 @@ export default class Music extends Vue {
       }
     ];
   }
-  getSongList(): any[] {
-    return [
-      {
-        song: {
-          name: "Song 1",
-          duration: "1:00",
-          genre: "genre 1",
-          album: {
-            name: "Album 1"
-          }
-        },
-        artist: {
-          name: "Artist 1"
-        }
-      },
-      {
-        song: {
-          name: "Song 1",
-          duration: "1:00",
-          genre: "genre 1",
-          album: {
-            name: "Album 1"
-          }
-        },
-        artist: {
-          name: "Artist 1"
-        }
-      }
-    ];
+  getSongList(): Track[] {
+    return this.mediaManager.getTracks();
   }
 }
 </script>
