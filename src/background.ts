@@ -7,7 +7,7 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib'
 import { JsonDB } from 'node-json-db';
 import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
- 
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const db = new JsonDB(new Config("MediaDb", false, false, '/'));
 
