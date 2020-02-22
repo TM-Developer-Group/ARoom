@@ -19,13 +19,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import MusicSongList from "@/components/MusicSongList.vue";
+import MusicTrackList from "@/components/MusicTrackList.vue";
 import TrackList from "@/components/TarckList.vue";
 import $ from "jquery";
 
 @Component({
   components: {
-    MusicSongList,
+    MusicTrackList,
     Album,
     TrackList
   }

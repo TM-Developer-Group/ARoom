@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in songList" :key="item.id">
+        <tr v-for="item in trackList" :key="item.id">
           <td>{{item.title}}</td>
           <td>{{toSec(item.duration)}}</td>
           <td>{{item.artist}}</td>
@@ -27,8 +27,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Track } from "@/script/mediaManager";
 @Component
-export default class MusicSongList extends Vue {
-  @Prop() private songList!: Array<Track>;
+export default class MusicTrackList extends Vue {
+  @Prop() private trackList!: Array<Track>;
   toSec(duration: number) {
     return Math.floor(duration / 60) + ":" + ((Math.round(duration % 60) < 10)
       ? "0" + Math.round(duration % 60)
