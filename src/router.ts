@@ -21,9 +21,9 @@ export default new Router({
                     component: () => import('@/components/MusicNewTab.vue')
                 },
                 {
-                    name: 'MusicSongs',
-                    path: 'Songs',
-                    component: () => import('@/components/MusicSongList.vue'),
+                    name: 'Tracks',
+                    path: 'Tracks',
+                    component: () => import('@/components/MusicTrackList.vue'),
                     props: true
                 },
                 {

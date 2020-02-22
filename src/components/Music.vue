@@ -25,14 +25,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import MusicSongList from "@/components/MusicSongList.vue";
+import MusicTrackList from "@/components/MusicTrackList.vue";
 import { MediaManager, Artist, Album, Track } from '@/script/mediaManager'
 import $ from "jquery";
 
 @Component({
   components: {
     Music,
-    MusicSongList
+    MusicTrackList
   }
 })
 
@@ -42,7 +42,7 @@ export default class Music extends Vue {
   artists = new Array<Artist>();
 
   mounted(){
-    this.mediaManager.findAudio('D:/Personal/Music');
+    this.mediaManager.findAudio('I:/Music(Max)/');
     this.artists = this.mediaManager.getArtists();
   }
   getCategories(): any[] {
@@ -56,9 +56,9 @@ export default class Music extends Vue {
       {
         title: "tracks",
         to: {
-          name: "MusicSongs",
+          name: "Tracks",
           params: {
-            songList: this.getSongList()
+            trackList: this.getSongList()
           }
         }
       },
