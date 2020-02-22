@@ -7,14 +7,14 @@ import { ICommonTagsResult, IPicture, IAudioMetadata } from "music-metadata";
 export class Artist {
   constructor(name?: string, ...albums: Album[]) {
     this.name = name !== undefined ? name : "NoName";
-    this.album = albums;
+    this.albums = albums;
   }
   name?: string;
-  album: Album[];
+  albums: Album[];
 
   public getTracks(): Track[] {
     var tracks = new Array<Track>();
-    this.album.forEach(element => {
+    this.albums.forEach(element => {
       element.tracks.forEach(item => {
         tracks.push(item);
       });
@@ -77,7 +77,7 @@ export class MediaManager {
   public getAlbums(): Album[] {
     var albums = new Array<Album>();
     this.artists.forEach(artist => {
-      artist.album.forEach(item => {
+      artist.albums.forEach(item => {
         albums.push(item);
       });
     });
@@ -87,7 +87,7 @@ export class MediaManager {
   public getTracks(): Track[] {
     var tracks = new Array<Track>();
     this.artists.forEach(artist => {
-      artist.album.forEach(album => {
+      artist.albums.forEach(album => {
         album.tracks.forEach(item => {
           tracks.push(item);
         });
@@ -116,7 +116,7 @@ export class MediaManager {
         album = new Album(mdCommon.album);
         track = new Track(item, md);
         album.tracks.push(track);
-        artist.album.push(album);
+        artist.albums.push(album);
         this.artists.push(artist);
       } else {
         var tempArtist = this.artists.find(data => {
@@ -125,13 +125,13 @@ export class MediaManager {
         artist =
           tempArtist !== undefined ? tempArtist : new Artist(mdCommon.artist);
 
-        var tempAlbum = artist.album.find(data => {
+        var tempAlbum = artist.albums.find(data => {
           if (data.name === mdCommon.album) {
             return data;
           }
         });
         if (tempAlbum === undefined)
-          artist.album.push(new Album(mdCommon.album, new Track(item, md)));
+          artist.albums.push(new Album(mdCommon.album, new Track(item, md)));
         else tempAlbum.tracks.push(new Track(item, md));
       }
       if (index === array.length - 1) {
@@ -150,5 +150,31 @@ export class MediaManager {
       });
     if (value === undefined) return false;
     else return true;
+  }
+
+  public async getArtistsFromDb():Promise<Artist[]> {
+    return this.db.getData('/artists') as Artist[];
+  }
+
+  public async getAlbumsFromDb():Promise<Album[]> {
+    var artists = await this.getArtistsFromDb();
+    var albums = new Array<Album>();
+    artists.forEach(artist => {
+      artist.albums.forEach(album => {
+        albums.push(album);
+      })
+    })
+    return albums;
+  }
+
+  public async getTracksFromDb():Promise<Track[]>{
+    var albums = await this.getAlbumsFromDb();
+    var tracks = new Array<Track>();
+    albums.forEach(album => {
+      album.tracks.forEach(item => {
+        tracks.push(item);
+      })
+    })
+    return tracks;
   }
 }
