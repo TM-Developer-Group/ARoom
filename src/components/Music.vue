@@ -7,7 +7,7 @@
     </div>
     <div class="row d-flex justify-content-center align-items-baseline">
       <router-link
-        v-for="(item, i) in getCategories()"
+        v-for="(item, i) in car"
         :key="i"
         class="selector"
         exact-active-class="selector-active"
@@ -25,57 +25,62 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import MusicSongList from "@/components/MusicSongList.vue";
-import { MediaManager, Artist, Album, Track } from '@/script/mediaManager'
+import MusicTrackList from "@/components/MusicTrackList.vue";
+import { MediaManager, Artist, Album, Track } from "@/script/mediaManager";
+import { JsonDB } from "node-json-db";
+import { Config } from "node-json-db/dist/lib/JsonDBConfig";
 import $ from "jquery";
 
 @Component({
   components: {
     Music,
-    MusicSongList
+    MusicTrackList
   }
 })
-
-
 export default class Music extends Vue {
   mediaManager = new MediaManager();
-  artists = new Array<Artist>();
-
-  mounted(){
-    this.mediaManager.findAudio('D:/Personal/Music');
-    this.artists = this.mediaManager.getArtists();
-  }
-  getCategories(): any[] {
-    return [
-      {
-        title: "new",
-        to: {
-          name: "MusicNew",
-        }
-      },
-      {
-        title: "tracks",
-        to: {
-          name: "MusicSongs",
-          params: {
-            songList: this.getSongList()
-          }
-        }
-      },
-      {
-        title: "album",
-        to:{
-          name: "Album"
-        }
-      },
-      {
-        title: "artist",
-        to:{
-          name: "Artist"
+  tracks = new Array<Track>();
+  db = new JsonDB(new Config("MediaDb", false, false, "/"));
+  categories = [
+    {
+      title: "new",
+      to: {
+        name: "MusicNew"
+      }
+    },
+    {
+      title: "tracks",
+      to: {
+        name: "Tracks",
+        params: {
+          trackList: this.tracks
         }
       }
-    ];
+    },
+    {
+      title: "album",
+      to: {
+        name: "Album"
+      }
+    },
+    {
+      title: "artist",
+      to: {
+        name: "Artist"
+      }
+    }
+  ];
+
+  mounted() {
+    if (!this.db.exists("/artist"))
+      this.mediaManager.findAudio("I:/Music(Max)/").then(() => {
+        this.tracks = this.mediaManager.getTracks();
+      });
+    else this.mediaManager.getTracksFromDb().then(data => {
+      this.tracks = data;
+    });
   }
+
   getSongList(): Track[] {
     return this.mediaManager.getTracks();
   }
