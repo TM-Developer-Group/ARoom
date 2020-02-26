@@ -31,6 +31,10 @@ export class Album {
   name?: string;
   tracks: Track[];
 
+  public getImg():Promise<ICommonTagsResult["picture"]>{
+    return this.tracks[0].getImg();
+  }
+
   public getTracks(): Track[] {
     var tracks = new Array<Track>();
     this.tracks.forEach(item => {
