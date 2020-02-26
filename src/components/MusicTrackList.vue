@@ -25,14 +25,27 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Track } from "@/script/mediaManager";
+import { MediaManager, Artist, Album, Track } from "@/script/mediaManager";
 @Component
 export default class MusicTrackList extends Vue {
   @Prop() private trackList!: Array<Track>;
+  
+  mediaManager = new MediaManager();
+
   toSec(duration: number) {
     return Math.floor(duration / 60) + ":" + ((Math.round(duration % 60) < 10)
       ? "0" + Math.round(duration % 60)
       : Math.round(duration % 60));
+  }
+  
+
+  mounted(){
+    window.console.log(this.trackList)
+    if(this.trackList === undefined){
+      this.mediaManager.getTracksFromDb().then(data => {
+        this.trackList = data;
+      })
+    }
   }
 }
 </script>
