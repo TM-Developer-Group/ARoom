@@ -2,18 +2,18 @@
   <div>
     <div class="album-bg">
       <!-- TODO: Change src -->
-      <img src="../assets/dev-img/3.jpg" />
+      <img/>
     </div>
     <div class="album-img">
       <!-- TODO: Change src -->
-      <img src="../assets/dev-img/3.jpg" />
+      <img/>
       <div class="label-block">
-        <span>Праздник на улице 36</span>
+        <span>{{album.name}}</span>
         <!-- TODO: router-link -->
-        <span>Скриптонит</span>
+        <span>{{album.artist}}</span>
       </div>
     </div>
-    <TrackList :tracks="getSongList()"/>
+    <TrackList :tracks="tracks"/>
   </div>
 </template>
 
@@ -21,32 +21,38 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import MusicTrackList from "@/components/MusicTrackList.vue";
 import TrackList from "@/components/TarckList.vue";
+import { MediaHelper, Artist, Track, Album } from "@/script/mediaManager";
+import { AudioSearch } from "@/script/audioSearch";
 import $ from "jquery";
 
 @Component({
   components: {
     MusicTrackList,
-    Album,
+    AlbumComponent,
     TrackList
   }
 })
-export default class Album extends Vue {
-  getSongList(): any[] {
-    return [
-      { label: "Капли вниз по бёдрам" },
-      { label: "Напомни" },
-      { label: "104 (Скит)" },
-      { label: "Цепи" },
-      { label: "Точно не нужно новых" },
-      { label: "Поворот" },
-      { label: "Первый" },
-      { label: "Ага, ну" },
-      { label: "Вечеринка" },
-      { label: "Не забирай меня с пати" },
-      { label: "Темно" },
-      { label: "Оставь их" },
-      { label: "Outro" }
-    ];
+export default class AlbumComponent extends Vue {
+  @Prop() artistName!:string;
+  @Prop() albumName!:string;
+  album:Album = new Album();
+  tracks:Track[] = new Array<Track>();
+  img!:any;
+
+  mounted(){
+    var audioSearch = new AudioSearch();
+    window.console.log(this.album);
+    audioSearch.findAlbum(this.artistName, this.albumName).then(data => {
+      this.album = data;
+      this.tracks = data.tracks;
+      MediaHelper.convertToTrack(data.tracks[0]).getImg().then(data => {
+        window.console.log(data);
+        if(data !== undefined){
+          $('.album-img img').attr('src', `data:${data[0].format};base64,${data[0].data.toString('base64')}`)
+          $('.album-bg img').attr('src', `data:${data[0].format};base64,${data[0].data.toString('base64')}`)
+        }          
+      });
+    })
   }
 }
 </script>

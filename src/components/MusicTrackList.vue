@@ -40,7 +40,6 @@ export default class MusicTrackList extends Vue {
   
 
   mounted(){
-    window.console.log(this.trackList)
     if(this.trackList === undefined){
       this.mediaManager.getTracksFromDb().then(data => {
         this.trackList = data;

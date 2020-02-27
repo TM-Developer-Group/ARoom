@@ -7,7 +7,7 @@
     </div>
     <div class="row d-flex justify-content-center align-items-baseline">
       <router-link
-        v-for="(item, i) in car"
+        v-for="(item, i) in categories"
         :key="i"
         class="selector"
         exact-active-class="selector-active"
@@ -60,7 +60,11 @@ export default class Music extends Vue {
     {
       title: "album",
       to: {
-        name: "Album"
+        name: "Album",
+        params: {
+          artistName: 'Скриптонит',
+          albumName: '2004'
+        }
       }
     },
     {

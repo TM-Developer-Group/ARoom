@@ -7,7 +7,7 @@
       :key="i"
     >
       <span>{{ ++i }}</span>
-      <span class="ml-4">{{ item.label }}</span>
+      <span class="ml-4">{{ item.title }}</span>
     </a>
   </div>
 </template>
